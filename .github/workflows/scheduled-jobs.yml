@@ -43,6 +43,15 @@ jobs:
         script:
           - bctc-gic.js
           - bctc-las.js
+          - bctc-dad.js
+          - bctc-lix.js
+          - bctc-pgd.js
+          - bctc-saf.js
+          - bctc-sba.js
+          - bctc-smn.js
+          - bctc-szg.js
+          - bctc-vtb.js
+          - bctc-wcs.js
 
     steps:
       - name: "❗️ Skip 23:00 if in special periods"
