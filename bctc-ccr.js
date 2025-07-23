@@ -17,58 +17,46 @@ axiosRetry.default(axios, {
 
 async function fetchAndExtractData() {
   try {
-    const response = await axios.post(
-      'https://api.iseebooks.vn//api/article/search',
-      {
-        page: 1,
-        pageSize: 10,
-        home_flag: true,
-        article_title: "",
-        article_type_rid: "99cd5537-9fef-4faa-97ea-7f499352a5cf"
-      },
+    const response = await axios.get(
+      'https://ezir.fpts.com.vn/ThongTinDoanhNghiep/GetTinDoanhNghiepCongBo?stock_code=CCR&lang=vi-VN',
       {
         headers: {
           'Accept': 'application/json',
-          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Language': 'en-US,en;q=0.7',
           'Cache-Control': 'no-cache',
           'Connection': 'keep-alive',
-          'Content-Type': 'application/json',
-          'Origin': 'https://iseebooks.vn',
-          'Pragma': 'no-cache',
-          'Referer': 'https://iseebooks.vn/',
-          'Sec-Fetch-Dest': 'empty',
           'Sec-Fetch-Mode': 'cors',
           'Sec-Fetch-Site': 'same-site',
           'Sec-GPC': '1',
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
+          'X-Requested-Store': 'default',
+          'X-Requested-With': 'XMLHttpRequest',
           'sec-ch-ua': '"Not)A;Brand";v="8", "Chromium";v="138", "Brave";v="138"',
           'sec-ch-ua-mobile': '?0',
           'sec-ch-ua-platform': '"Windows"'
-        }
+        },
+        timeout: 60000
       }
     );
-
     const currentYear = new Date().getFullYear().toString();
     // response.data là object JSON, thường có dạng { data: [ ... ], ... }
-    const items = response.data.Data || [];
-
-    const names = items.filter(item => item.article_title && item.article_title.trim().toLowerCase().includes(currentYear)).map(item => item.article_title && item.article_title.trim()).filter(Boolean);
-
+    const items = response.data || [];
+    const names = items.filter(item => item.title && item.title.toLowerCase().trim().includes(currentYear)).map(item => item.title && item.title.trim());
     if (names.length === 0) {
       console.log('Không tìm thấy báo cáo tài chính nào.');
       return;
     }
-
+    console.log('📢 [bctc-SAF.js:50]', names);
     // Lọc ra các báo cáo chưa có trong DB
-    const newNames = await filterNewNames(names, COMPANIES.DAD);
+    const newNames = await filterNewNames(names, COMPANIES.CCR);
     console.log('📢 [bctc-geg.js:44]', newNames);
     if (newNames.length) {
-      await insertBCTC(newNames, COMPANIES.DAD);
+      await insertBCTC(newNames, COMPANIES.CCR);
 
-      // Gửi thông báo Telegram cho từng báo cáo mới
+      // Gửi thông báo Telegram cho từng báo cáo mới;
       await Promise.all(
         newNames.map(name =>
-          sendTelegramNotification(`Báo cáo tài chính của DAD::: ${name}`)
+          sendTelegramNotification(`Báo cáo tài chính của CCR::: ${name}`)
         )
       );
       console.log(`Đã thêm ${newNames.length} báo cáo mới và gửi thông báo.`);

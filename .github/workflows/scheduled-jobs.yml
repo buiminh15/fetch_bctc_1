@@ -52,6 +52,9 @@ jobs:
           - bctc-szg.js
           - bctc-vtb.js
           - bctc-wcs.js
+          - bctc-btw.js
+          - bctc-ccr.js
+          - bctc-ttc.js
 
     steps:
       - name: "❗️ Skip 23:00 if in special periods"
