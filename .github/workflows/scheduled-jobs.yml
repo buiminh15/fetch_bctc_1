@@ -55,6 +55,13 @@ jobs:
           - bctc-btw.js
           - bctc-ccr.js
           - bctc-ttc.js
+          - bctc-hat.js
+          - bctc-ifs.js
+          - bctc-nap.js
+          - bctc-pmb.js
+          - bctc-pmc.js
+          - bctc-qnp.js
+          - bctc-sdn.js
 
     steps:
       - name: "❗️ Skip 23:00 if in special periods"
