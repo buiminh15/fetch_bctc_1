@@ -39,7 +39,7 @@ const COMPANIES = {
   CSV: 'CSV',
   CLC: 'CLC',
   BSH: 'BSH',
-  HTi: 'HTi',
+  HTI: 'HTI',
   HGM: 'HGM',
   TTN: 'TTN',
   TTD: 'TTD',
@@ -93,6 +93,8 @@ const COMPANIES = {
   QHD: 'QHD',
   LGC: 'LGC',
   GMX: 'GMX',
+  GMX: 'GMX',
+
 };
 
 const CAFEF_API = `https://cafef.vn/du-lieu/Ajax/CongTy/BaoCaoTaiChinh.aspx?sym=`;
