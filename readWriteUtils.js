@@ -40,10 +40,14 @@ function trimArchive(archiveFile, maxSize = 50, keepCount = 10) {
   }
 }
 
+function removeDuplicates(arr) {
+  return [...new Set(arr)];
+}
 
 //  fs.writeFileSync('response.html', response.data, 'utf8');
 module.exports = {
   readArchive,
   writeArchive,
-  trimArchive
+  trimArchive,
+  removeDuplicates
 };
